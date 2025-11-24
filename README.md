@@ -67,11 +67,11 @@ The delay results follow the same trend.
 Run the simulation:
 
 ```bash
-./waf --run TCP-Fibre-Cut
+./waf --run TCP-Cubic-Link-Failure
 ```
 
 Or, run it and save all logs to a file:
 
 ```bash
-./waf --run TCP-Fibre-Cut > scratch/TCP-Fibre-Cut/output.log 2>&1
+./waf --run TCP-Cubic-Link-Failure > scratch/TCP-Cubic-Link-Failure/output.log 2>&1
 ```
