@@ -1,4 +1,4 @@
-# Fiber-Cut Scenario Simulation with TCP CUBIC
+# Impact Analysis of Link Failure on TCP Performance Using Rocketfuel Topologies
 
 Here I simulated a **fiber-cut scenario** to analyze the behavior of TCP with CUBIC congestion control. The experiment used a realistic Rocketfuel network topology. Leaf nodes acted as consumers (requesters), and a high-degree backbone router was selected as the content producer.
 
