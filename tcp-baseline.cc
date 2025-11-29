@@ -126,7 +126,7 @@ int main (int argc, char* argv[]) {
   cmd.AddValue("stop", "Simulation stop time", stopTime);
   cmd.AddValue("cut", "Enable fiber cut event", fiberCut);
   cmd.AddValue("cutTime", "Time to cut a backbone link", cutTime);
-  cmd.AddValue("percentClients", "Fraction of clients to activate (0.0-1.0)", percentClients);
+  cmd.AddValue("percentClients", "Fraction of clients to activate", percentClients);
   cmd.Parse(argc, argv);
 
   Config::SetDefault("ns3::PfifoFastQueueDisc::MaxSize", StringValue("10p"));
@@ -172,7 +172,7 @@ int main (int argc, char* argv[]) {
   Ipv4GlobalRoutingHelper::PopulateRoutingTables();
 
 
-  // 2. Install Producer
+
   Ptr<TcpProducerApp> producer = CreateObject<TcpProducerApp>();
   producer->Setup(1024); 
   producerNode->AddApplication(producer);
@@ -190,7 +190,6 @@ int main (int argc, char* argv[]) {
   Ptr<OutputStreamWrapper> throughputStream = asciiTraceHelper.CreateFileStream("scratch/load_TCP/"+prefix+"tcp-throughput.csv");
   *throughputStream->GetStream() << "Time,Bytes" << std::endl;
 
-  // 3. Install Consumers
   uint32_t totalContents = 10000;
   double alpha = 0.8;
   
@@ -200,7 +199,7 @@ int main (int argc, char* argv[]) {
 
   int jitter = 0;
   for (Ptr<Node> client : clientNodes) {
-    // load scaler
+
     if (activeClients >= limitClients) break;
     activeClients++;
 
@@ -227,7 +226,7 @@ int main (int argc, char* argv[]) {
 
     for (uint32_t i = 0; i < client->GetNDevices(); ++i) {
         Ptr<NetDevice> dev = client->GetDevice(i);
-        // Check if it is a PointToPoint device
+
         if (dev->GetInstanceTypeId() == PointToPointNetDevice::GetTypeId()) {
             dev->TraceConnectWithoutContext("MacRx", MakeBoundCallback(&RxTrace, throughputStream));
         }
@@ -236,7 +235,7 @@ int main (int argc, char* argv[]) {
 
   std::cout << "Active Clients: " << activeClients << " out of " << totalPossibleClients << std::endl;
 
-  // 4. Fiber Cut
+ 
   if (fiberCut) {
     std::vector<uint32_t> gwIfaces = GetGatewayInterfacesToCut(producerNode, reader);
     uint32_t cuts = std::max<uint32_t>(0, (int32_t)gwIfaces.size());
@@ -264,7 +263,7 @@ int main (int argc, char* argv[]) {
   return 0;
 }
 
-} // namespace ns3
+} 
 
 int main(int argc, char* argv[]) {
   return ns3::main(argc, argv);
