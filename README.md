@@ -53,7 +53,7 @@ The delay results follow the same trend.
 
 ## **4. Congestion Window**
 
-## The graph demonstrates TCP CUBIC's distinct "concave-then-convex" window growth. It can clearly be seen from the graph: it increases rapidly at first (convex), flattens out as it approaches the bandwidth limit (concave) to safely probe for capacity, and then accelerates again if no loss occurs. As expected, following the link cut event at **t=12s**, the congestion window sharply decreases to adapt to the network disruption.
+The graph demonstrates TCP CUBIC's distinct "concave-then-convex" window growth. It can clearly be seen from the graph: it increases rapidly at first (convex), flattens out as it approaches the bandwidth limit (concave) to safely probe for capacity, and then accelerates again if no loss occurs. As expected, following the link cut event at **t=12s**, the congestion window sharply decreases to adapt to the network disruption.
 
 ![CWND_vs_time](cwnd_vs_time.png)
 
