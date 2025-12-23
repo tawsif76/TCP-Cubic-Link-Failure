@@ -6,9 +6,11 @@
 #include "ns3/integer.h"
 #include "ns3/double.h"
 #include "timestamp-tag.h"
+#include <fstream>
 
 namespace ns3 {
 
+extern std::ofstream g_cwndLog;
 NS_LOG_COMPONENT_DEFINE("TcpConsumerApp");
 NS_OBJECT_ENSURE_REGISTERED(TcpConsumerApp);
 
@@ -32,6 +34,13 @@ TypeId TcpConsumerApp::GetTypeId() {
     return tid;
 }
 
+void TcpConsumerApp::CwndTracer(uint32_t oldVal, uint32_t newVal) {
+    if (g_cwndLog.is_open()) {
+        g_cwndLog << Simulator::Now().GetSeconds() << "," 
+                  << GetNode()->GetId() << "," 
+                  << newVal << "\n";
+    }
+}
 TcpConsumerApp::TcpConsumerApp()
     : m_socket(0),
       m_payloadSize(1024) {
@@ -63,7 +72,8 @@ void TcpConsumerApp::StartApplication() {
     // 2. Connect to the Producer
     m_socket->Connect(m_peerAddress);
 
-
+    m_socket->TraceConnectWithoutContext("CongestionWindow", 
+                                        MakeCallback(&TcpConsumerApp::CwndTracer, this));
     m_socket->SetRecvCallback(MakeCallback(&TcpConsumerApp::HandleRead, this));
     
 

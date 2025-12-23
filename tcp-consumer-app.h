@@ -24,7 +24,7 @@ protected:
 
 private:
     void SendData(Ptr<Socket> socket, uint32_t txSpace);
-    
+    void CwndTracer(uint32_t oldVal, uint32_t newVal);
     void HandleRead(Ptr<Socket> socket);
 
     Ptr<Socket> m_socket;

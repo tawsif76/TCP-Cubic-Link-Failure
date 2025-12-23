@@ -10,7 +10,7 @@ The simulation ran for 20 seconds. The first 12 seconds represented normal netwo
 
 ## **Analysis of Results**
 
-The effect of the link failure and the subsequent rerouting appears clearly in three metrics: Hop Count, Throughput, and Average Delay.
+The effect of the link failure and the subsequent rerouting appears clearly in three metrics: Hop Count, Throughput, and Average Delay, Congestion Window (CWND).
 
 ---
 
@@ -51,7 +51,11 @@ The delay results follow the same trend.
 
 ![Delay Graph](delay.png) <!-- placeholder for delay graph, delay.png -->
 
----
+## **4. Congestion Window**
+
+## The graph demonstrates TCP CUBIC's distinct "concave-then-convex" window growth. It can clearly be seen from the graph: it increases rapidly at first (convex), flattens out as it approaches the bandwidth limit (concave) to safely probe for capacity, and then accelerates again if no loss occurs. As expected, following the link cut event at **t=12s**, the congestion window sharply decreases to adapt to the network disruption.
+
+![CWND_vs_time](cwnd_vs_time.png)
 
 ## **Usage**
 
@@ -67,11 +71,11 @@ The delay results follow the same trend.
 Run the simulation:
 
 ```bash
-./waf --run TCP-Cubic-Link-Failure
+./waf --run TCP-Fibre-Cut
 ```
 
 Or, run it and save all logs to a file:
 
 ```bash
-./waf --run TCP-Cubic-Link-Failure > scratch/TCP-Cubic-Link-Failure/output.log 2>&1
+./waf --run TCP-Fibre-Cut > scratch/TCP-Fibre-Cut/output.log 2>&1
 ```

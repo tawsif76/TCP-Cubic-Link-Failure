@@ -19,7 +19,9 @@ namespace ns3 {
 
 
 std::ofstream g_rawDelayLog;   
-std::ofstream g_hopLog;       
+std::ofstream g_hopLog;     
+std::ofstream g_cwndLog;
+
 uint32_t g_totalTx = 0;        
 uint32_t g_totalRx = 0;        
 uint32_t g_intervalTx = 0;
@@ -113,7 +115,7 @@ void RxTrace(Ptr<OutputStreamWrapper> stream, Ptr<const Packet> packet) {
 int main (int argc, char* argv[]) {
   std::string topoFile = "scratch/TCP-Fibre-Cut/4755.r0-clients3-conv-annotated.txt";
   double stopTime = 20.0;
-  bool fiberCut = false;
+  bool fiberCut = true;
 
   double cutTime = 12.0;
   double percentClients = 0.05; 
@@ -187,7 +189,7 @@ int main (int argc, char* argv[]) {
   std::string prefix = fiberCut ? "CUT-" : "";
   AsciiTraceHelper asciiTraceHelper;
 
-  Ptr<OutputStreamWrapper> throughputStream = asciiTraceHelper.CreateFileStream("scratch/load_TCP/"+prefix+"tcp-throughput.csv");
+  Ptr<OutputStreamWrapper> throughputStream = asciiTraceHelper.CreateFileStream("scratch/TCP-Fibre-Cut/"+prefix+"tcp-throughput.csv");
   *throughputStream->GetStream() << "Time,Bytes" << std::endl;
 
   uint32_t totalContents = 10000;
@@ -249,11 +251,14 @@ int main (int argc, char* argv[]) {
 
 
     
-    g_rawDelayLog.open("scratch/load_TCP/" + prefix + "tcp-all-delays.csv");
+    g_rawDelayLog.open("scratch/TCP-Fibre-Cut/" + prefix + "tcp-all-delays.csv");
     g_rawDelayLog << "Time,NodeId,Delay\n";
 
-    g_hopLog.open("scratch/load_TCP/" + prefix + "tcp-hop-count.csv");
+    g_hopLog.open("scratch/TCP-Fibre-Cut/" + prefix + "tcp-hop-count.csv");
     g_hopLog << "Time,Hops\n";
+
+    g_cwndLog.open("scratch/TCP-Fibre-Cut/" + prefix + "cwnd-trace.csv");
+    g_cwndLog << "Time,NodeId,CWND\n";
 
 
   Simulator::Stop(Seconds(stopTime));

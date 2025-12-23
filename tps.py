@@ -57,7 +57,7 @@ plt.legend()
 plt.grid(True, which='both', linestyle='--', linewidth=0.5)
 
 # Save and Show
-output_filename = 'comparison_throughput.png'
+output_filename = 'throughput.png'
 plt.savefig(output_filename, dpi=300)
 print(f"Plot saved to {output_filename}")
 plt.show()
